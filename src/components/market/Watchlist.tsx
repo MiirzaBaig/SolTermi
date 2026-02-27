@@ -5,6 +5,7 @@ import { useTradingStore } from "@/stores/tradingStore";
 import { priceEngine } from "@/lib/priceEngine";
 import { formatPrice, formatPercent } from "@/lib/formatters";
 import { cn } from "@/lib/cn";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 const DEFAULT_WATCHLIST = ["SOL/USDC", "BONK/SOL", "WIF/USDC", "JUP/SOL", "JTO/USDC"];
 
@@ -95,6 +96,7 @@ export const Watchlist = memo(function Watchlist() {
   };
 
   const rows = useMemo(() => DEFAULT_WATCHLIST, []);
+  const isBooting = Object.keys(prices).length === 0;
 
   return (
     <ul
@@ -103,7 +105,25 @@ export const Watchlist = memo(function Watchlist() {
       onKeyDown={onKeyDown}
       aria-label="Watchlist"
     >
-      {rows.map((symbol, idx) => {
+      {isBooting
+        ? rows.map((symbol) => (
+          <li key={`skeleton-${symbol}`}>
+            <div className="w-full px-3 py-3 border-3 border-border bg-panel-bg">
+              <div className="flex items-center justify-between gap-3">
+                <Skeleton className="h-4 w-24" />
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-4 w-14" />
+                  <Skeleton className="h-4 w-12" />
+                </div>
+              </div>
+              <div className="mt-2 flex items-center gap-2">
+                <Skeleton className="h-2 w-2 rounded-full" />
+                <Skeleton className="h-3 w-16" />
+              </div>
+            </div>
+          </li>
+        ))
+        : rows.map((symbol, idx) => {
         const data = prices[symbol] ?? { price: 0, change: 0, spread: 0, liquidity: 0, history: [] };
         const isActive = activePair === symbol;
         const isHighlighted = idx === highlightIndex;

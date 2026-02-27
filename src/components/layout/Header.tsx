@@ -78,7 +78,7 @@ export function Header({
 
       <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
         <Badge variant="outline" className="hidden sm:inline-flex">Mainnet</Badge>
-        <WalletButton />
+        <WalletButton className="max-w-[140px] sm:max-w-none truncate" />
       </div>
     </div>
   );

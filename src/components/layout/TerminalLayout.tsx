@@ -19,6 +19,9 @@ export function TerminalLayout({ sidebar, chart, orderPanel, bottom }: TerminalL
 
   // Close mobile menu when resizing to desktop
   useEffect(() => {
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      setBottomCollapsed(true);
+    }
     const mq = window.matchMedia("(min-width: 1024px)");
     const handler = () => {
       if (mq.matches) setMobileMenuOpen(false);
@@ -28,7 +31,7 @@ export function TerminalLayout({ sidebar, chart, orderPanel, bottom }: TerminalL
   }, []);
 
   return (
-    <div className="flex h-dvh sm:h-screen w-full flex-col bg-terminal-bg text-text-primary overflow-hidden safe-area-inset">
+    <div className="flex min-h-dvh sm:h-screen w-full flex-col bg-terminal-bg text-text-primary overflow-y-auto sm:overflow-hidden safe-area-inset">
       <header className="flex-shrink-0 border-b-3 border-border bg-panel-bg shadow-brutal-sm">
         <Header onMenuClick={() => setMobileMenuOpen((o) => !o)} menuOpen={mobileMenuOpen} />
       </header>
@@ -65,7 +68,7 @@ export function TerminalLayout({ sidebar, chart, orderPanel, bottom }: TerminalL
         </>
       )}
 
-      <div className="flex flex-1 min-h-0">
+      <div className="flex flex-1 min-h-0 flex-col lg:flex-row">
         {/* Desktop sidebar: hidden on mobile, collapsible on lg+ */}
         <aside
           className={cn(
@@ -93,7 +96,7 @@ export function TerminalLayout({ sidebar, chart, orderPanel, bottom }: TerminalL
           )}
         </aside>
 
-        <main className="flex-1 flex flex-col min-w-0 min-h-0">
+        <main className="flex-1 flex flex-col min-w-0 min-h-0 overflow-y-auto xl:overflow-hidden">
           <div className="flex-1 grid grid-cols-1 xl:grid-cols-[1fr_360px] min-h-0">
             <section className="flex flex-col min-h-0 min-w-0 border-r-3 border-border border-r-0 xl:border-r-3 bg-terminal-bg">
               <div className="panel-header flex items-center justify-between flex-shrink-0 border-b-3 border-border px-2 sm:px-3 py-2">
@@ -104,8 +107,8 @@ export function TerminalLayout({ sidebar, chart, orderPanel, bottom }: TerminalL
                 className={cn(
                   "flex-1 min-h-0",
                   "xl:min-h-0",
-                  !mobileOrderExpanded && "min-h-[55vh] sm:min-h-[60vh]",
-                  mobileOrderExpanded && "min-h-[36vh] sm:min-h-[40vh]"
+                  !mobileOrderExpanded && "min-h-[48vh] sm:min-h-[54vh]",
+                  mobileOrderExpanded && "min-h-[32vh] sm:min-h-[38vh]"
                 )}
               >
                 {chart}
@@ -124,7 +127,7 @@ export function TerminalLayout({ sidebar, chart, orderPanel, bottom }: TerminalL
                   </span>
                 </button>
                 {mobileOrderExpanded && (
-                  <div className="max-h-[65vh] min-h-0 overflow-auto flex flex-col border-t-0">{orderPanel}</div>
+                  <div className="max-h-[58vh] min-h-0 overflow-auto flex flex-col border-t-0">{orderPanel}</div>
                 )}
               </div>
             </section>

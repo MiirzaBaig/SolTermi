@@ -4,14 +4,21 @@ import { memo } from "react";
 import { useOrderBook } from "@/hooks/useOrderBook";
 import { useTradingStore } from "@/stores/tradingStore";
 import { formatPrice, formatAmount } from "@/lib/formatters";
+import { Skeleton } from "@/components/ui/Skeleton";
 export const OrderBook = memo(function OrderBook() {
   const snapshot = useOrderBook();
   const setLimitPriceFromBook = useTradingStore((s) => s.setLimitPriceFromBook);
 
   if (!snapshot) {
     return (
-      <div className="p-4 text-text-secondary text-sm font-semibold animate-loading-pulse transition-opacity duration-300">
-        Loading order book...
+      <div className="p-3 border-t-3 border-border mt-3 pt-3 space-y-2">
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-5 w-full" />
+        <Skeleton className="h-5 w-full" />
+        <Skeleton className="h-5 w-full" />
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-5 w-full" />
+        <Skeleton className="h-5 w-full" />
       </div>
     );
   }

@@ -5,6 +5,7 @@ import { createChart, CandlestickSeries, HistogramSeries } from "lightweight-cha
 import type { IChartApi, Time } from "lightweight-charts";
 import { priceEngine } from "@/lib/priceEngine";
 import { useTradingStore } from "@/stores/tradingStore";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { cn } from "@/lib/cn";
 
 interface CrosshairDisplay {
@@ -30,6 +31,7 @@ export const TradingChart = memo(function TradingChart() {
   const [flashPrice, setFlashPrice] = useState(false);
   const [switchingTf, setSwitchingTf] = useState(false);
   const [crosshair, setCrosshair] = useState<CrosshairDisplay | null>(null);
+  const [chartReady, setChartReady] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -151,6 +153,7 @@ export const TradingChart = memo(function TradingChart() {
         volumeSeries.setData(vol);
         hasInitialDataRef.current = true;
         lastDataFingerprintRef.current = fingerprint;
+        setChartReady(true);
       } else {
         candleSeries.update({
           time: last.time as Time,
@@ -194,6 +197,18 @@ export const TradingChart = memo(function TradingChart() {
         ref={containerRef}
         className="h-full w-full opacity-100"
       />
+      {!chartReady && (
+        <div className="absolute inset-0 p-3 flex flex-col gap-2 bg-terminal-bg/85 pointer-events-none">
+          <Skeleton className="h-5 w-44" />
+          <Skeleton className="flex-1 w-full" />
+          <div className="grid grid-cols-4 gap-2">
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+          </div>
+        </div>
+      )}
       {switchingTf && (
         <div className="absolute inset-0 bg-terminal-bg/75 animate-loading-pulse pointer-events-none" />
       )}

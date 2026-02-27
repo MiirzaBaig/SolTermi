@@ -15,6 +15,7 @@ import { SlippageSettings } from "./SlippageSettings";
 import { formatPrice } from "@/lib/formatters";
 import { cn } from "@/lib/cn";
 import Decimal from "decimal.js";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 const MAX_ORDER_USD = 5000;
 const DAILY_LOSS_CAP_USD = 300;
@@ -44,6 +45,7 @@ export function OrderPanel() {
   const [nowMs, setNowMs] = useState(Date.now());
   const [inlineError, setInlineError] = useState<string | null>(null);
   const [submitPulse, setSubmitPulse] = useState(false);
+  const [marketReady, setMarketReady] = useState(false);
   const [dailyRisk, setDailyRisk] = useState<{ day: string; usedUsd: number }>({
     day: dayKeyNow(),
     usedUsd: 0,
@@ -207,7 +209,10 @@ export function OrderPanel() {
   }, [limitPriceFromBook]);
 
   useEffect(() => {
-    const unsub = priceEngine.subscribe(() => setLastQuoteAt(Date.now()));
+    const unsub = priceEngine.subscribe(({ candles }) => {
+      setLastQuoteAt(Date.now());
+      if (candles.length > 0) setMarketReady(true);
+    });
     return unsub;
   }, []);
 
@@ -309,6 +314,13 @@ export function OrderPanel() {
         {inlineError && <div className="text-xs text-loss mt-1">{inlineError}</div>}
       </div>
 
+      {!marketReady ? (
+        <div className="mb-3 space-y-2">
+          <Skeleton className="h-4 w-40" />
+          <Skeleton className="h-24 w-full" />
+        </div>
+      ) : (
+        <>
       <div className="text-xs text-text-secondary mb-2">
         Est. output: <span className="font-mono text-text-primary">{formatPrice(estimatedOutput)} {quoteSymbol}</span>
       </div>
@@ -355,6 +367,8 @@ export function OrderPanel() {
           </span>
         </div>
       </div>
+        </>
+      )}
 
       {(quoteStale || notionalUsd > MAX_ORDER_USD || dailyLossUsed + estimatedLossBudgetUsd > DAILY_LOSS_CAP_USD) && (
         <div className="text-xs mb-2 text-loss">

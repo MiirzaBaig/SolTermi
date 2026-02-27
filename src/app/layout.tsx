@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { Providers } from "@/components/providers/Providers";
 import "./globals.css";
 
@@ -54,6 +55,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${ibmPlexMono.variable} antialiased font-mono`}>
         <Providers>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );
