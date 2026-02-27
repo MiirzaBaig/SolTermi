@@ -1,0 +1,15 @@
+/* Neo-brutalism panel styling */
+
+.panel-header {
+  border-bottom: 3px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.panel-content {
+  padding: 0.75rem;
+}
