@@ -1,55 +1,70 @@
 # SolTerminal
 
-A portfolio-showcase Solana trading terminal. Connect wallet, view real-time charts, and simulate trading with mock data.
+A professional, retail-focused Solana trading terminal built to demonstrate production-grade trading UX, risk controls, and responsive interface design.
 
-## Setup
+## Live Demo
+
+- **Production URL:** [https://sol-terminal-six.vercel.app/](https://sol-terminal-six.vercel.app/)
+
+## Overview
+
+SolTerminal simulates a modern DeFi terminal experience for Solana users, with emphasis on:
+
+- fast order entry
+- execution-quality transparency
+- risk-aware trade submission
+- mobile-first usability
+
+> Note: current trade execution is mock/simulated for product demonstration.
+
+## Core Features
+
+- **Trading UI:** Candlestick + volume chart, multi-timeframe controls, live price/crosshair overlays
+- **Order Flow:** Market/limit orders, order-book-assisted pricing, slippage settings
+- **Execution Quality:** Route preview, estimated slippage, price impact, fee breakdown, fill-quality badges
+- **Risk Controls:** Max order notional cap, daily loss cap, high-slippage acknowledgement gate
+- **Portfolio Surfaces:** Positions, trade history, balance summary, transaction toasts with copyable hash
+- **Keyboard Support:** Fast shortcuts for search, order focus, pair switching, and command palette
+- **Mobile UX:** Collapsible mobile sections, scroll-safe layout, compact controls, optimized spacing
+- **Loading States:** Skeleton loaders for chart, watchlist, order panel, and order book
+
+## Trading UX & Safety Decisions
+
+- Show execution quality **before** confirmation to reduce poor fills.
+- Block risk violations at input/submit time, not after transaction failure.
+- Provide explicit safeguards for critical edge cases:
+  - wallet disconnected
+  - stale quote window
+  - insufficient balance (buy/sell side aware)
+
+## Tech Stack
+
+- **Framework:** Next.js 14 (App Router), React 18, TypeScript
+- **Styling/UI:** Tailwind CSS, Radix UI, Framer Motion
+- **State/Data:** Zustand, React Query, Decimal.js
+- **Web3:** Solana Wallet Adapter
+- **Charting:** `lightweight-charts`
+
+## Local Development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open `http://localhost:3000`.
 
-## Build
+### Scripts
 
-```bash
-npm run build
-npm start
-```
+- `npm run dev` - Start dev server
+- `npm run dev:3000` - Start on port 3000
+- `npm run dev:3004` - Start on port 3004
+- `npm run build` - Production build
+- `npm run start` - Run production build
+- `npm run lint` - Lint checks
 
-## Deploy (Vercel)
+## Deployment
 
 ```bash
 vercel --prod
 ```
-
-## Features
-
-- **Trading chart** — TradingView Lightweight Charts, candlesticks, volume, multiple timeframes
-- **Order entry** — Market and limit orders, slippage settings, click order book to fill price
-- **Execution quality panel** — Pre-trade route, estimated slippage, price impact, and fee breakdown
-- **Risk controls** — Max order notional cap, daily loss budget cap, high-slippage acknowledgement flow
-- **Positions & history** — Live PnL, order history, balance bar
-- **Wallet** — Phantom, Solflare, Torus (Solana Wallet Adapter)
-- **Keyboard shortcuts** — B (buy), S (sell), / (search), Cmd+K (command palette), ? (shortcuts)
-- **Mock data** — All trading is simulated; no real on-chain execution
-
-## Trading UX Decisions
-
-- **Show execution quality before submit**: every order displays route, impact, slippage estimate, and total fees pre-trade so users can catch low-quality fills before signing.
-- **Cap risk at input time, not after failure**: the order form blocks orders that exceed max notional or breach the daily loss budget to reduce accidental over-sizing.
-- **Require explicit acknowledgement on high slippage**: elevated slippage requires a confirmation checkbox in the modal to prevent blind acceptance of poor execution.
-
-### Edge Cases Handled
-
-- **Wallet disconnected during order flow**: order submission is blocked with a clear error if the wallet is not connected.
-- **Stale quote before execution**: orders are blocked when quote data is stale (no fresh market tick in the freshness window).
-- **Insufficient balance at submit**: buy checks quote balance (including fees), sell checks base-token balance; both return explicit required vs available amounts.
-
-## Tech
-
-- Next.js 14 (App Router), TypeScript, Tailwind CSS
-- Zustand, React Query, Decimal.js
-- Solana Wallet Adapter, lightweight-charts
-- Radix UI, Framer Motion
