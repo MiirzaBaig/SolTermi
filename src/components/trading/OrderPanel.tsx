@@ -245,8 +245,8 @@ export function OrderPanel() {
   };
 
   return (
-    <div className="flex flex-col p-3 border-b-3 border-border">
-      <div className="flex items-center justify-between mb-3">
+    <div className="flex flex-col p-2 sm:p-3 border-b-3 border-border min-w-0">
+      <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3">
         <Tabs.Root value={orderType} onValueChange={(v) => setOrderType(v as "market" | "limit")}>
           <Tabs.List className="flex border-2 border-border">
             <Tabs.Trigger value="market" className="px-3 py-2 text-xs font-semibold border-r-2 border-border data-[state=active]:bg-accent data-[state=active]:text-terminal-bg transition-all duration-smooth">Market</Tabs.Trigger>
@@ -299,7 +299,7 @@ export function OrderPanel() {
             setInlineError(null);
           }}
         />
-        <div className="flex gap-1 mt-1">
+        <div className="flex flex-wrap gap-1 mt-1">
           {[25, 50, 75, 100].map((p) => (
             <Button key={p} size="sm" variant="ghost" onClick={() => setAmountPct(p)}>
               {p}%
@@ -313,8 +313,8 @@ export function OrderPanel() {
         Est. output: <span className="font-mono text-text-primary">{formatPrice(estimatedOutput)} {quoteSymbol}</span>
       </div>
 
-      <div className="mb-3 border-2 border-border p-2 text-xs font-mono space-y-1">
-        <div className="flex items-center gap-1 mb-1">
+      <div className="mb-3 border-2 border-border p-2.5 text-xs font-mono space-y-1.5 min-w-0">
+        <div className="flex flex-wrap items-center gap-1 mb-1">
           <span
             className={cn(
               "border px-1.5 py-0.5 text-[10px] uppercase tracking-wide",
@@ -330,27 +330,27 @@ export function OrderPanel() {
           {mevProtection && <span className="border border-accent px-1.5 py-0.5 text-[10px] text-accent uppercase tracking-wide">MEV Shield</span>}
           {highSlippage && <span className="border border-loss px-1.5 py-0.5 text-[10px] text-loss uppercase tracking-wide">High Slip</span>}
         </div>
-        <div className="flex items-center justify-between">
-          <span className="text-text-secondary">Route</span>
-          <span>{route}</span>
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-text-secondary shrink-0">Route</span>
+          <span className="truncate text-right min-w-0">{route}</span>
         </div>
-        <div className="flex items-center justify-between">
-          <span className="text-text-secondary">Price impact</span>
-          <span className={cn(priceImpact > 2 ? "text-loss" : priceImpact > 0.5 ? "text-yellow-500" : "text-profit")}>
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-text-secondary shrink-0">Price impact</span>
+          <span className={cn("tabular-nums shrink-0", priceImpact > 2 ? "text-loss" : priceImpact > 0.5 ? "text-yellow-500" : "text-profit")}>
             {priceImpact.toFixed(2)}%
           </span>
         </div>
-        <div className="flex items-center justify-between">
-          <span className="text-text-secondary">Est. slippage</span>
-          <span>{estSlipPct.toFixed(2)}%</span>
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-text-secondary shrink-0">Est. slippage</span>
+          <span className="tabular-nums shrink-0">{estSlipPct.toFixed(2)}%</span>
         </div>
-        <div className="flex items-center justify-between">
-          <span className="text-text-secondary">Fees (DEX + network)</span>
-          <span>${totalFeeUsd.toFixed(2)}</span>
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-text-secondary shrink-0" title="DEX + network">Fees</span>
+          <span className="tabular-nums shrink-0">${totalFeeUsd.toFixed(2)}</span>
         </div>
-        <div className="flex items-center justify-between border-t border-border pt-1">
-          <span className="text-text-secondary">Risk budget today</span>
-          <span>
+        <div className="flex items-center justify-between gap-2 border-t border-border pt-1.5">
+          <span className="text-text-secondary shrink-0" title="Daily loss cap">Risk budget</span>
+          <span className="tabular-nums shrink-0 whitespace-nowrap">
             ${dailyLossUsed.toFixed(2)} / ${DAILY_LOSS_CAP_USD.toFixed(0)}
           </span>
         </div>
@@ -395,8 +395,8 @@ export function OrderPanel() {
       {loading && <div className="text-[11px] text-text-secondary mt-1 animate-loading-pulse">Estimating route and fees...</div>}
 
       {confirmOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 animate-fade-in" aria-modal>
-          <div className="bg-panel-bg border-3 border-border p-5 max-w-sm w-full mx-4 shadow-brutal animate-zoom-in">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 animate-fade-in" aria-modal>
+          <div className="bg-panel-bg border-3 border-border p-4 sm:p-5 max-w-sm w-full shadow-brutal animate-zoom-in max-h-[90vh] overflow-auto">
             <p className="text-sm font-mono mb-2">
               {side === "buy" ? "Buy" : "Sell"} {amount} {baseSymbol} at {orderType === "market" ? "market" : formatPrice(limitPriceNum)}?
             </p>

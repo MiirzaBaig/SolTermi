@@ -68,11 +68,11 @@ export default function Home() {
       sidebar={<ErrorBoundary><Watchlist /></ErrorBoundary>}
       chart={
         <ErrorBoundary>
-        <div className="relative flex flex-col h-full">
-          <div className="flex-shrink-0 px-3 py-2 flex items-center justify-between border-b-3 border-border">
+        <div className="relative flex flex-col h-full min-h-0">
+          <div className="flex-shrink-0 px-2 sm:px-3 py-1.5 sm:py-2 flex items-center justify-between gap-2 border-b-3 border-border">
             <ChartToolbar />
           </div>
-          <div className="flex-1 min-h-0 relative">
+          <div className="flex-1 min-h-[200px] sm:min-h-[240px] relative">
             <TradingChart />
             <ChartOverlay />
           </div>
@@ -88,11 +88,11 @@ export default function Home() {
       bottom={
         <>
           <BalanceBar />
-          <div className="flex gap-4 mt-2">
-            <div className="flex-1 min-w-0">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2">
+            <div className="flex-1 min-w-0 min-h-0">
               <ErrorBoundary><Positions /></ErrorBoundary>
             </div>
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 min-h-0">
               <ErrorBoundary><OrderHistory /></ErrorBoundary>
             </div>
           </div>

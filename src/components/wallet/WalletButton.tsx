@@ -39,8 +39,9 @@ export function WalletButton({ className }: { className?: string }) {
       </Dropdown.Trigger>
       <Dropdown.Portal>
         <Dropdown.Content
-          className="min-w-[220px] border-3 border-border bg-panel-bg p-3 shadow-brutal z-[100]"
+          className="min-w-[220px] max-w-[calc(100vw-2rem)] border-3 border-border bg-panel-bg p-3 shadow-brutal z-[100]"
           sideOffset={8}
+          align="end"
         >
           <div className="px-2 py-2 text-xs text-text-secondary break-all border-b-2 border-border mb-2">
             {publicKey.toBase58()}

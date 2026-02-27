@@ -37,8 +37,8 @@ export const Positions = memo(function Positions() {
   }, [activePair]);
 
   return (
-    <div className="text-xs">
-      <div className="grid grid-cols-7 gap-1 px-2 py-2 text-text-secondary border-b-2 border-border font-bold uppercase">
+    <div className="text-xs min-w-0 overflow-x-auto">
+      <div className="grid grid-cols-7 gap-1 px-2 py-2 text-text-secondary border-b-2 border-border font-bold uppercase min-w-[480px]">
         <span>Pair</span>
         <span>Side</span>
         <span>Size</span>
@@ -65,7 +65,7 @@ export const Positions = memo(function Positions() {
             <div
               key={pos.id}
               className={cn(
-                "grid grid-cols-7 gap-1 px-2 py-2 border-b-2 border-border font-semibold transition-opacity duration-200",
+                "grid grid-cols-7 gap-1 px-2 py-2 border-b-2 border-border font-semibold transition-opacity duration-200 min-w-[480px]",
                 pnl >= 0 ? "bg-profit/10" : "bg-loss/10"
               )}
             >

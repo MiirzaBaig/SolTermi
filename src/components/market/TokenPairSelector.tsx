@@ -84,8 +84,9 @@ export function TokenPairSelector() {
       </Dropdown.Trigger>
       <Dropdown.Portal>
         <Dropdown.Content
-          className="min-w-[280px] border-3 border-border bg-panel-bg p-3 shadow-brutal z-[100]"
+          className="min-w-[200px] max-w-[calc(100vw-2rem)] w-[280px] border-3 border-border bg-panel-bg p-3 shadow-brutal z-[100]"
           sideOffset={8}
+          align="start"
           onCloseAutoFocus={(e) => e.preventDefault()}
         >
           <Input

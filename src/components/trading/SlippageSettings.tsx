@@ -21,11 +21,12 @@ export function SlippageSettings() {
       </Dropdown.Trigger>
       <Dropdown.Portal>
         <Dropdown.Content
-          className="min-w-[260px] border-3 border-border bg-panel-bg p-4 shadow-brutal z-[100]"
+          className="min-w-[260px] max-w-[calc(100vw-2rem)] border-3 border-border bg-panel-bg p-4 shadow-brutal z-[100]"
           sideOffset={8}
+          align="end"
         >
           <div className="text-xs font-medium text-text-secondary mb-2">Slippage %</div>
-          <div className="flex gap-1 mb-3">
+          <div className="flex flex-wrap gap-1 mb-3">
             {SLIPPAGE_PRESETS.map((p) => (
               <Button
                 key={p}

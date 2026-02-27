@@ -5,6 +5,7 @@ import { createChart, CandlestickSeries, HistogramSeries } from "lightweight-cha
 import type { IChartApi, Time } from "lightweight-charts";
 import { priceEngine } from "@/lib/priceEngine";
 import { useTradingStore } from "@/stores/tradingStore";
+import { cn } from "@/lib/cn";
 
 interface CrosshairDisplay {
   open: number;
@@ -196,13 +197,13 @@ export const TradingChart = memo(function TradingChart() {
       {switchingTf && (
         <div className="absolute inset-0 bg-terminal-bg/75 animate-loading-pulse pointer-events-none" />
       )}
-      <div className="absolute top-2 right-2 border-2 border-border bg-panel-bg/90 px-2 py-1 text-[11px] font-mono pointer-events-none">
+      <div className="absolute top-2 right-2 border-2 border-border bg-panel-bg/95 backdrop-blur-sm px-2 py-1.5 text-xs font-mono pointer-events-none shadow-brutal-sm max-w-[calc(100%-1rem)]">
         {crosshair ? (
-          <span>
+          <span className="tabular-nums block truncate" title={`O ${crosshair.open.toFixed(2)} H ${crosshair.high.toFixed(2)} L ${crosshair.low.toFixed(2)} C ${crosshair.close.toFixed(2)} V ${Math.round(crosshair.volume)}`}>
             O {crosshair.open.toFixed(2)} H {crosshair.high.toFixed(2)} L {crosshair.low.toFixed(2)} C {crosshair.close.toFixed(2)} V {Math.round(crosshair.volume)}
           </span>
         ) : (
-          <span className={flashPrice ? "text-accent transition-colors" : "text-text-secondary"}>
+          <span className={cn("tabular-nums", flashPrice ? "text-accent transition-colors" : "text-text-secondary")}>
             Live {livePrice.toFixed(2)}
           </span>
         )}

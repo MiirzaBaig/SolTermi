@@ -91,7 +91,7 @@ export function CommandPalette({
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/60 z-[100] animate-fade-in" />
         <Dialog.Content
-          className="fixed left-1/2 top-[20%] z-[100] w-full max-w-md -translate-x-1/2 border-3 border-border bg-panel-bg p-3 shadow-brutal animate-zoom-in"
+          className="fixed left-1/2 top-[15%] sm:top-[20%] z-[100] w-full max-w-md -translate-x-1/2 border-3 border-border bg-panel-bg p-3 shadow-brutal animate-zoom-in mx-4"
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
           <input

@@ -9,8 +9,15 @@ import { WalletButton } from "@/components/wallet/WalletButton";
 import { TokenPairSelector } from "@/components/market/TokenPairSelector";
 import { MarketStats } from "@/components/market/MarketStats";
 import { cn } from "@/lib/cn";
+import { Menu } from "lucide-react";
 
-export function Header() {
+export function Header({
+  onMenuClick,
+  menuOpen,
+}: {
+  onMenuClick?: () => void;
+  menuOpen?: boolean;
+}) {
   const activePair = useTradingStore((s) => s.activePair);
   const [price, setPrice] = useState(priceEngine.getCurrentPrice());
   const [change24h, setChange24h] = useState(0);
@@ -28,38 +35,49 @@ export function Header() {
   }, [activePair]);
 
   return (
-    <div className="flex h-16 items-center justify-between px-5 border-b-3 border-border">
-      <div className="flex items-center gap-6">
-        <div className="flex items-center gap-2">
-          <span className="font-bold text-lg tracking-tighter text-text-primary uppercase">
+    <div className="flex h-14 sm:h-16 items-center justify-between gap-2 px-3 sm:px-5 border-b-3 border-border">
+      <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+        <button
+          type="button"
+          onClick={onMenuClick}
+          className="lg:hidden flex-shrink-0 p-2 -ml-1 border-2 border-border bg-panel-bg text-text-primary hover:bg-accent/20 hover:text-accent transition-colors"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <span className="font-bold text-sm sm:text-lg tracking-tighter text-text-primary uppercase truncate">
             SOL TERMINAL
           </span>
           <span
-            className="h-2.5 w-2.5 bg-profit border-2 border-border shrink-0"
+            className="h-2 w-2 sm:h-2.5 sm:w-2.5 bg-profit border-2 border-border shrink-0"
             title="Connected"
             aria-hidden
           />
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
           <TokenPairSelector />
-          <span className="text-base text-text-primary tabular-nums font-semibold transition-opacity duration-200">{formatPrice(price)}</span>
+          <span className="text-sm sm:text-base text-text-primary tabular-nums font-semibold truncate min-w-0 max-w-[80px] sm:max-w-none">
+            {formatPrice(price)}
+          </span>
           <span
             className={cn(
-              "text-base font-bold tabular-nums transition-opacity duration-200",
+              "hidden sm:inline text-sm sm:text-base font-bold tabular-nums flex-shrink-0",
               change24h >= 0 ? "text-profit" : "text-loss"
             )}
           >
             {formatPercent(change24h)}
           </span>
         </div>
-        <div className="hidden md:block">
+        <div className="hidden md:block flex-shrink-0">
           <MarketStats />
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
-        <Badge variant="outline">Mainnet</Badge>
+      <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        <Badge variant="outline" className="hidden sm:inline-flex">Mainnet</Badge>
         <WalletButton />
       </div>
     </div>

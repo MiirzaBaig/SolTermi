@@ -36,12 +36,12 @@ export function BalanceBar() {
   }
 
   return (
-    <div className="flex items-center gap-6 py-3 px-3 border-b-2 border-border flex-wrap font-semibold">
+    <div className="flex items-center gap-3 sm:gap-6 py-2 sm:py-3 px-2 sm:px-3 border-b-2 border-border flex-wrap font-semibold text-sm sm:text-base">
       <span className="text-text-primary tabular-nums">
         Portfolio: {formatUsd(totalUsd)}
       </span>
       {balances.map((b) => (
-        <span key={b.symbol} className="text-text-secondary text-sm">
+        <span key={b.symbol} className="text-text-secondary text-xs sm:text-sm">
           {b.symbol}: <span className="text-text-primary tabular-nums">{formatAmount(b.amount)}</span>
         </span>
       ))}

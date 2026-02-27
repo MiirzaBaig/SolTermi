@@ -13,7 +13,7 @@ export function ChartToolbar() {
   const setTimeframe = useTradingStore((s) => s.setTimeframe);
 
   return (
-    <div className="flex items-center gap-1 flex-wrap">
+    <div className="flex items-center gap-1 flex-wrap overflow-x-auto overflow-y-hidden py-0.5">
       {TIMEFRAMES.map((tf) => (
         <Button
           key={tf}
@@ -24,6 +24,7 @@ export function ChartToolbar() {
             priceEngine.setTimeframe(tf);
           }}
           className={cn(
+            "flex-shrink-0",
             timeframe !== tf &&
               "focus-visible:ring-accent/20 focus-visible:ring-offset-0 hover:border-accent/20 hover:bg-panel-bg"
           )}
